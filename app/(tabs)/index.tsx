@@ -1,26 +1,28 @@
-import { Image, SafeAreaView, StyleSheet } from 'react-native';
+import { Image, SafeAreaView, ScrollView, StyleSheet, useColorScheme } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { height } from '@/constants/styles';
+import { darkGray, height, mainStyles } from '@/constants/styles';
+import AuthLayout from '../layouts/AuthLayout';
 
 
 export default function TabOneScreen() {
+  const colorScheme = useColorScheme()
+
+  const styles = StyleSheet.create({
+    container: {
+      height: height
+    },
+
+  });
   return (
-    <SafeAreaView>
-    <View style={styles.container}>
-      <View>
-        <Image style={styles.imgStyle} source={require('@/assets/images/transparent-logo.png')} />
-      </View>
-    </View>
-    </SafeAreaView>
+    <AuthLayout>
+      <ScrollView stickyHeaderHiddenOnScroll stickyHeaderIndices={[0]} style={styles.container}>
+        <View>
+          <Text style={mainStyles.topText}>Register Now</Text>
+        </View>
+        <View>
+          <Text>Welcome</Text>
+        </View>
+      </ScrollView>
+    </AuthLayout>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-   height: height
-  },
-  imgStyle: {
-    height: 50,
-    width: '30%'
-  }
-});
