@@ -1,7 +1,7 @@
-import { Image, ImageBackground, SafeAreaView, StyleSheet, useColorScheme } from 'react-native'
+import { Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, useColorScheme } from 'react-native'
 import React from 'react'
 import { Text, View } from '@/components/Themed'
-import { darkGray, lightGray, width } from '@/constants/styles'
+import { darkGray, width } from '@/constants/styles'
 
 export default function AuthLayout({ children }: {
   children: React.ReactNode
@@ -29,13 +29,17 @@ export default function AuthLayout({ children }: {
   })
   return (
     <SafeAreaView>
-      <ImageBackground style={styles.topBackground} source={require('@/assets/images/auth-top-image.jpg')}>
-      <View style={styles.container}>
-        <Image style={styles.imgStyle} source={require('@/assets/images/transparent-logo.png')} />
-        <Text></Text>
-      </View>
-      </ImageBackground>
-      {children}
+      <ScrollView>
+        <ImageBackground style={styles.topBackground} source={require('@/assets/images/auth-top-image.jpg')}>
+          <View style={styles.container}>
+            <Image style={styles.imgStyle} source={require('@/assets/images/transparent-logo.png')} />
+            <Text></Text>
+          </View>
+        </ImageBackground>
+        <View>
+          {children}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
