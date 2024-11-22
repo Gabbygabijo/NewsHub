@@ -2,27 +2,26 @@ import { Image, SafeAreaView, ScrollView, StyleSheet, useColorScheme } from 'rea
 import { Text, View } from '@/components/Themed';
 import { darkGray, height, mainStyles } from '@/constants/styles';
 import AuthLayout from '../layouts/AuthLayout';
+import InputField from '@/components/InputField';
+import Register from '../(screens)/Register';
+import { useUser } from '@/context/user-contex';
+import HomeScreen from '../(screens)/HomeScreen';
 
 
 export default function TabOneScreen() {
   const colorScheme = useColorScheme()
-
+  const { user } = useUser()
+  
   const styles = StyleSheet.create({
-    container: {
-      height: height
-    },
 
   });
   return (
-    <AuthLayout>
-      <ScrollView stickyHeaderHiddenOnScroll stickyHeaderIndices={[0]} style={styles.container}>
-        <View>
-          <Text style={mainStyles.topText}>Register Now</Text>
-        </View>
-        <View>
-          <Text>Welcome</Text>
-        </View>
-      </ScrollView>
-    </AuthLayout>
+    <View>
+      {user ?
+        <HomeScreen />
+        :
+        <Register />
+      }
+    </View>
   );
 }
