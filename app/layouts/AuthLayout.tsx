@@ -29,7 +29,7 @@ export default function AuthLayout({ children }: {
   })
   return (
     <SafeAreaView>
-      <ScrollView>
+      <ScrollView automaticallyAdjustKeyboardInsets>
         <ImageBackground style={styles.topBackground} source={require('@/assets/images/auth-top-image.jpg')}>
           <View style={styles.container}>
             <Image style={styles.imgStyle} source={require('@/assets/images/transparent-logo.png')} />
