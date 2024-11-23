@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { ImageBackground, StyleSheet, useColorScheme } from 'react-native'
 import { Text, View } from './Themed'
-import { darkGray, lightGray } from '@/constants/styles'
+import { darkGray, lightBlue, lightGray, mainStyles, width } from '@/constants/styles'
 import { storyTypes } from '@/types/interface'
 import { apiEachStory } from '@/apis/newsfetch'
+import { ExternalLink } from './ExternalLink'
 
 export default function StoryCard({ id }: {
   id?: number
 }) {
   const [obj, setObj] = useState<undefined | storyTypes>()
+  const [loading, setLoading] = useState(false)
   const getFeeds = async () => {
+    setLoading(true)
     let data;
     data = await apiEachStory(id);
-    setObj(data.data)
+    setTimeout(() => {
+      setObj(data.data)
+      setLoading(false)
+    }, 1000)
+
     // console.log(data.data)
   }
-  useEffect(()=>{
+  useEffect(() => {
     getFeeds()
-  }, [])
+  }, [id])
   // console.log(obj?.descendants)
   const colorScheme = useColorScheme()
   const styles = StyleSheet.create({
@@ -29,7 +36,8 @@ export default function StoryCard({ id }: {
     },
     containerStyle: {
       borderRadius: 12,
-      overflow: 'hidden'
+      overflow: 'hidden',
+      backgroundColor: colorScheme === 'dark' ? darkGray.gray300 : lightGray.gray300,
     },
     topRightTextText: {
       textAlign: 'center',
@@ -48,18 +56,42 @@ export default function StoryCard({ id }: {
     lowerCobtainer: {
       backgroundColor: colorScheme === 'dark' ? darkGray.gray300 : lightGray.gray300,
       gap: 20
+    },
+    allView: {
+      backgroundColor: colorScheme === 'dark' ? darkGray.gray300 : lightGray.gray300,
     }
   })
   return (
-    <View style={[styles.containerStyle]}>
-      <ImageBackground style={[styles.imgBackground]} source={require('@/assets/images/main-image.png')}>
-        <View style={styles.topRightText}>
-          <Text style={styles.topRightTextText}>Live</Text>
+    <View>
+      {(obj === undefined || loading) ?
+        <View>
+          <View style={[styles.containerStyle, { height: 250, flexDirection: 'row', justifyContent: 'flex-end' }]}>
+            <View style={[styles.topRightText]} />
+          </View>
         </View>
-      </ImageBackground>
-      <View>
-        <Text>{obj?.title}</Text>
-      </View>
+        :
+        <View style={[styles.containerStyle]}>
+          <ImageBackground style={[styles.imgBackground]} source={require('@/assets/images/main-image.png')}>
+            <View style={styles.topRightText}>
+              <Text style={styles.topRightTextText}>{obj?.type}</Text>
+            </View>
+          </ImageBackground>
+          <View style={[styles.allView, mainStyles.container, { marginVertical: 15, gap: 10 }]}>
+            <Text style={[mainStyles.topText500]}>{obj?.title}</Text>
+            {
+              obj?.text
+              &&
+              <Text numberOfLines={3} style={[mainStyles.regularText400]}>
+                {obj?.text}
+              </Text>
+            }
+            <ExternalLink href={obj ? obj?.url : ''}>
+              <Text style={[mainStyles.regularText, { color: lightBlue.blue100 }]}>Read more</Text>
+            </ExternalLink>
+            <Text style={{ color: colorScheme === 'dark' ? darkGray.gray100 : lightGray.gray100 }}>By {obj?.by}</Text>
+          </View>
+        </View>
+      }
     </View>
   )
 }
