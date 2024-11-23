@@ -53,7 +53,7 @@ export default function Register() {
           <InputField value={password} onChaneText={(text) => setPassword(text)} password placeholder='Enter your Password' label='Password' textEntry={passView} iconOnPress={() => setPassView(!passView)} />
           <View style={{ flexDirection: 'row' }}>
             <Text style={[{ color: colorScheme === 'dark' ? darkGray.gray200 : lightGray.gray200 }, mainStyles.topText400]}>Already have an account? </Text>
-            <Text style={[{ color: colorScheme === 'dark' ? darkBlue.blue100 : lightBlue.blue100 }, mainStyles.topText400]} onPress={() => router.push('/Login')}>Login</Text>
+            <Text style={[{ color: lightBlue.blue100 }, mainStyles.topText400]} onPress={() => router.push('/Login')}>Login</Text>
           </View>
           <View style={{ marginTop: 10 }}>
             <ButtonAction btnText='Register' BtnAction={() => { handleRegister() }} />
