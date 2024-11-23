@@ -4,7 +4,8 @@ import { Tabs } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useUser } from '@/context/user-contex';
-
+import Entypo from '@expo/vector-icons/Entypo';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -32,15 +33,15 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          title: 'Home',
+          tabBarIcon: ({ color }) => <Entypo name="home" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="about"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          title: 'About',
+          tabBarIcon: ({ color }) => <FontAwesome6 name="user" size={24} color={color} />,
         }}
       />
     </Tabs>
