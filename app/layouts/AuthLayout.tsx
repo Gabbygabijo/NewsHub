@@ -30,7 +30,7 @@ export default function AuthLayout({ children }: {
   return (
     <SafeAreaView>
       <ScrollView automaticallyAdjustKeyboardInsets>
-        <ImageBackground style={styles.topBackground} source={require('@/assets/images/auth-top-image.jpg')}>
+        <ImageBackground style={styles.topBackground} source={{uri: 'https://static.vecteezy.com/system/resources/thumbnails/004/216/831/original/3d-world-news-background-loop-free-video.jpg'}}>
           <View style={styles.container}>
             <Image style={styles.imgStyle} source={require('@/assets/images/transparent-logo.png')} />
             <Text></Text>

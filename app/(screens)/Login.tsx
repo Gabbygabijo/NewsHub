@@ -9,6 +9,7 @@ import { router } from 'expo-router'
 import { useUser } from '@/context/user-contex'
 import { useSQLiteContext } from 'expo-sqlite'
 import { storeData } from '@/utilities/local-data'
+import Messagemodal from '@/components/modals/Messagemodal'
 
 export default function Login() {
   const db = useSQLiteContext()
@@ -17,32 +18,43 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [passView, setPassView] = useState(true)
   const { setUser } = useUser()
+  const [message, setMessage] = useState('')
+  const [messageTitle, setMessageTitle] = useState('')
+  const [modal, setModal] = useState(false)
   const access = {
     username: username,
     password: password
   }
   const handleLogin = async () => {
     if (username.length === 0 || password.length === 0) {
-      Alert.alert('Attention', 'Please enter both username and password');
+      setModal(true)
+      setMessage('Please enter both username and password')
+      setMessageTitle('Attention')
       return;
     }
     try {
       const user = await db.getFirstAsync('SELECT * FROM users WHERE username = ?', [username]);
       if (!user) {
-        Alert.alert('Error', 'Username does not exist !');
+        setModal(true)
+        setMessage('Username does not exist !')
+        setMessageTitle('Error')
         return;
       }
       const validUser = await db.getFirstAsync('SELECT * FROM users WHERE username = ? AND password = ?', [username, password]);
       if (validUser) {
-        Alert.alert('Success', 'Login successful');
         storeData("user", JSON.stringify(access))
         setUser({ username, password })
         router.replace('/')
       } else {
-        Alert.alert('Error', 'Incorrect password');
+        setModal(true)
+        setMessage('Incorrect password')
+        setMessageTitle('Error')
       }
     } catch (error) {
       console.log('Error during login : ', error);
+      setModal(true)
+      setMessage(`${error}`)
+      setMessageTitle('Error during login')
     }
   };
 
@@ -73,6 +85,7 @@ export default function Login() {
             <ButtonAction btnText='Login' BtnAction={() => { handleLogin() }} />
           </View>
         </View>
+        <Messagemodal visibility={modal} setVisibility={setModal} messageTitle={messageTitle} message={message} errorMessage />
       </View>
     </AuthLayout>
   )

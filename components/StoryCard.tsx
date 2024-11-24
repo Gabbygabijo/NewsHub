@@ -15,10 +15,8 @@ export default function StoryCard({ id }: {
     setLoading(true)
     let data;
     data = await apiEachStory(id);
-    setTimeout(() => {
-      setObj(data.data)
-      setLoading(false)
-    }, 1000)
+    setObj(data.data)
+    setLoading(false)
 
     // console.log(data.data)
   }
@@ -71,7 +69,7 @@ export default function StoryCard({ id }: {
         </View>
         :
         <View style={[styles.containerStyle]}>
-          <ImageBackground style={[styles.imgBackground]} source={require('@/assets/images/main-image.png')}>
+          <ImageBackground style={[styles.imgBackground]} source={{uri: 'https://static.vecteezy.com/system/resources/thumbnails/006/299/370/original/world-breaking-news-digital-earth-hud-rotating-globe-rotating-free-video.jpg'}}>
             <View style={styles.topRightText}>
               <Text style={styles.topRightTextText}>{obj?.type}</Text>
             </View>
@@ -85,7 +83,7 @@ export default function StoryCard({ id }: {
                 {obj?.text}
               </Text>
             }
-            <ExternalLink href={obj ? obj?.url : ''}>
+            <ExternalLink href={obj ? obj?.url : '/'}>
               <Text style={[mainStyles.regularText, { color: lightBlue.blue100 }]}>Read more</Text>
             </ExternalLink>
             <Text style={{ color: colorScheme === 'dark' ? darkGray.gray100 : lightGray.gray100 }}>By {obj?.by}</Text>
