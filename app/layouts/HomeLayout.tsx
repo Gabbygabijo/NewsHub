@@ -48,11 +48,11 @@ export default function HomeLayout({ children }: {
       margin: 'auto',
       borderRadius: 12,
       justifyContent: 'center',
-      backgroundColor: colorScheme === 'dark' ? darkGray.gray300 : lightGray.gray300,
+      // backgroundColor: colorScheme === 'dark' ? darkGray.gray300 : lightGray.gray300,
       alignItems: 'center',
     },
     allInModal: {
-      backgroundColor: colorScheme === 'dark' ? darkGray.gray300 : lightGray.gray300
+      // backgroundColor: colorScheme === 'dark' ? darkGray.gray300 : lightGray.gray300
     }
   })
   return (
