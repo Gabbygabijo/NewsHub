@@ -7,6 +7,8 @@ import InputField from '@/components/InputField'
 import ButtonAction from '@/components/ButtonAction'
 import { router } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
+import { storeData } from '@/utilities/local-data'
+import Messagemodal from '@/components/modals/Messagemodal'
 
 export default function Register() {
   const db = useSQLiteContext()
@@ -14,22 +16,47 @@ export default function Register() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [passView, setPassView] = useState(true)
+
+  const [message, setMessage] = useState('')
+  const [messageTitle, setMessageTitle] = useState('')
+  const [modal, setModal] = useState(false)
+  const [err, setErr] = useState(false)
+
+  const access = {
+    username: username,
+    password: password
+  }
+
   const handleRegister = async () => {
     if (username.length === 0 || password.length === 0) {
-      Alert.alert('Attention', 'Please enter both username and password');
+      setModal(true);
+      setMessage('Please enter both username and password');
+      setMessageTitle('Attention');
+      setErr(true)
       return;
     }
     try {
       const existingUser = await db.getFirstAsync('SELECT * FROM users WHERE username = ?', [username]);
       if (existingUser) {
-        Alert.alert('Error', 'Username already exists.');
+        setModal(true)
+        setMessage('Username already exists.')
+        setMessageTitle('Error')
+        setErr(true)
         return;
       }
       await db.runAsync('INSERT INTO users (username, password) VALUES (?, ?)', [username, password]);
-      Alert.alert('Success', 'Registration successful!');
-      router.push('/Login')
+      setModal(true)
+      setMessage('Registration successful!')
+      setMessageTitle('Success')
+      setErr(false)
+      storeData("user", JSON.stringify(access))
+      router.push('/')
     } catch (error) {
       console.log('Error during registration : ', error);
+      setModal(true)
+      setMessage(`${error}`)
+      setMessageTitle('Error during registration')
+      setErr(true)
     }
   };
   const styles = StyleSheet.create({
@@ -59,6 +86,8 @@ export default function Register() {
             <ButtonAction btnText='Register' BtnAction={() => { handleRegister() }} />
           </View>
         </View>
+        <Messagemodal visibility={modal} setVisibility={setModal} messageTitle={messageTitle} message={message} errorMessage={err} />
+
       </View>
     </AuthLayout>
   )
