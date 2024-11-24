@@ -7,9 +7,6 @@ export default function LogoutPopup({ children, setVisibility, visibility }: {
   children: React.ReactNode
 }) {
   const styles = StyleSheet.create({
-    container: {
-      // bac
-    }
   })
   return (
     <Modal visible={visibility} transparent >
