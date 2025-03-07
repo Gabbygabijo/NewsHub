@@ -10,13 +10,12 @@ export default function HomeScreen() {
   const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [currentPage, setCurrentPage] = useState(1);
   const [livedata, setLivedata] = useState<number[]>([]);
-  const [n, setN] = useState(0);
 
   const getData = useCallback(async (number: number) => {
     try {
       const data = await apiGetData();
-      setLivedata(data.data.slice((number - 1) * 5, number * 5)); // Fetch new data based on page number
-      setN(number);
+      const typedData = data as { data: number[] };
+      setLivedata(typedData.data.slice((number - 1) * 5, number * 5)); // Fetch new data based on page number
     } catch (error) {
       console.error('Error fetching data:', error);
     }
