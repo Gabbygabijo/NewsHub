@@ -13,8 +13,8 @@ export default function StoryCard({ id }: {
   const [loading, setLoading] = useState(false)
   const getFeeds = async () => {
     setLoading(true)
-    let data;
-    data = await apiEachStory(id);
+    let data: { data: storyTypes };
+    data = await apiEachStory(id) as { data: storyTypes };
     setObj(data.data)
     setLoading(false)
 
@@ -71,7 +71,7 @@ export default function StoryCard({ id }: {
         <View style={[styles.containerStyle]}>
           <ImageBackground style={[styles.imgBackground]} source={{uri: 'https://static.vecteezy.com/system/resources/thumbnails/006/299/370/original/world-breaking-news-digital-earth-hud-rotating-globe-rotating-free-video.jpg'}}>
             <View style={styles.topRightText}>
-              <Text style={styles.topRightTextText}>{obj?.type}</Text>
+              <Text style={styles.topRightTextText}>{obj?.type.toLocaleUpperCase()}</Text>
             </View>
           </ImageBackground>
           <View style={[styles.allView, mainStyles.container, { marginVertical: 15, gap: 10 }]}>
@@ -83,7 +83,7 @@ export default function StoryCard({ id }: {
                 {obj?.text}
               </Text>
             }
-            <ExternalLink href={obj ? obj?.url : '/'}>
+            <ExternalLink href={obj?.url ? obj?.url : 'https://gabijo-portfolio.netlify.app/'}>
               <Text style={[mainStyles.regularText, { color: lightBlue.blue100 }]}>Read more</Text>
             </ExternalLink>
             <Text style={{ color: colorScheme === 'dark' ? darkGray.gray100 : lightGray.gray100 }}>By {obj?.by}</Text>
