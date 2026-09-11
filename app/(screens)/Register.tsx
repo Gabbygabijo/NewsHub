@@ -9,10 +9,12 @@ import { router } from 'expo-router'
 import { useSQLiteContext } from 'expo-sqlite'
 import { storeData } from '@/utilities/local-data'
 import Messagemodal from '@/components/modals/Messagemodal'
+import { useUser } from '@/context/user-contex'
 
 export default function Register() {
   const db = useSQLiteContext()
   const colorScheme = useColorScheme()
+  const { setUser } = useUser()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [passView, setPassView] = useState(true)
@@ -50,7 +52,8 @@ export default function Register() {
       setMessageTitle('Success')
       setErr(false)
       storeData("user", JSON.stringify(access))
-      router.push('/')
+      setUser(access)
+      router.replace('/')
     } catch (error) {
       console.log('Error during registration : ', error);
       setModal(true)
