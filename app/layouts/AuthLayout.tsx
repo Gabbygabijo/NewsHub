@@ -1,7 +1,8 @@
-import { Image, ImageBackground, SafeAreaView, ScrollView, StyleSheet, useColorScheme } from 'react-native'
+import { Image, ImageBackground, ScrollView, StyleSheet, useColorScheme } from 'react-native'
 import React from 'react'
 import { Text, View } from '@/components/Themed'
 import { darkGray, width } from '@/constants/styles'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function AuthLayout({ children }: {
   children: React.ReactNode
