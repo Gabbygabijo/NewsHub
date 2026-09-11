@@ -21,7 +21,7 @@ export default function TabOneScreen() {
     if (!user) {
       handleLastLogin()
     }
-  })
+  }, [])
 
   const styles = StyleSheet.create({
 
