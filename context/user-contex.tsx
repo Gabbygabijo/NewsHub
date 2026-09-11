@@ -1,18 +1,18 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { getStoredData } from '@/utilities/local-data';
 
 // Define the user data type
-
 export type User = {
   id?: string;
   username: string;
-  password: string
+  password: string;
 };
-
 
 // Define the context type
 type UserContextType = {
   user: User | null;
   setUser: (user: User | null) => void;
+  isLoading: boolean;
 };
 
 // Create the UserContext with a default value of null
@@ -21,9 +21,27 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 // Create a provider component
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const loadStoredUser = async () => {
+      try {
+        const lastLogin = await getStoredData('user');
+        if (lastLogin) {
+          const data = JSON.parse(lastLogin);
+          setUser(data);
+        }
+      } catch (error) {
+        console.log('Error restoring user session:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadStoredUser();
+  }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, isLoading }}>
       {children}
     </UserContext.Provider>
   );
