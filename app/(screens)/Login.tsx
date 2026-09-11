@@ -1,6 +1,6 @@
 import { Text, View } from '@/components/Themed'
 import React, { useState } from 'react'
-import { Alert, ScrollView, StyleSheet, useColorScheme } from 'react-native'
+import { StyleSheet, useColorScheme } from 'react-native'
 import AuthLayout from '../layouts/AuthLayout'
 import { darkBlue, darkGray, height, lightBlue, lightGray, mainStyles } from '@/constants/styles'
 import InputField from '@/components/InputField'

@@ -7,7 +7,8 @@ import { useUser } from '@/context/user-contex'
 import { clearStoredData } from '@/utilities/local-data'
 import { router } from 'expo-router'
 import React, { useEffect, useRef, useState } from 'react'
-import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet, useColorScheme } from 'react-native'
+import { Image, Pressable, ScrollView, StyleSheet, useColorScheme } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function HomeLayout({ children }: {
   children: React.ReactNode
@@ -16,7 +17,7 @@ export default function HomeLayout({ children }: {
   const { user, setUser } = useUser()
   const [logoutModal, setLogoutmodal] = useState(false)
 
-  const scrollViewRef = useRef(null); 
+  const scrollViewRef = useRef<ScrollView>(null); 
   const scrollToTop = () => { 
     if (scrollViewRef.current) { 
       scrollViewRef.current.scrollTo({ y: 0, animated: true }); 
